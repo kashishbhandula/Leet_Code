@@ -1,0 +1,47 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define repf(i, j, k) for (int i = j; i < k; i++)
+#define repb(i, j, k) for (int i = j; i > k; i--)
+#define endl "\n"
+int solve()
+{
+    int n, k;
+    cin >> n >> k;
+    vector<int> arr(n, 0);
+    repf(i, 0, n) cin >> arr[i];
+    vector<int> visited(100005, 0);
+    vector<int> ans(n - k + 1, 0);
+
+    repf(i, 0, k)
+    {
+        visited[arr[i]] += 1;
+        if (visited[arr[i]] < 2)
+            ans[0]++;
+    }
+    repf(i, k, n)
+    {
+        ans[i - k + 1] = ans[i - k];
+        if (visited[arr[i - k]] < 2)
+            ans[i - k + 1]--;
+        visited[arr[i - k]]--;
+
+        visited[arr[i]]++;
+        if (visited[arr[i]] < 2)
+            ans[i - k + 1]++;
+    }
+    for (auto i : ans)
+        cout << i << " ";
+}
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int test;
+    cin >> test;
+    while (test--)
+    {
+        solve();
+        cout << endl;
+    }
+}
